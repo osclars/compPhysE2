@@ -51,6 +51,7 @@ void calcModes(double *modes, double *u, int nbr_of_particles)
         modes[k] = sum;
     }
 }
+
 void calcInvers(double *u, double *modes, int nbr_of_particles)
 {  
     int i,k;
@@ -74,9 +75,11 @@ void calcInvers(double *u, double *modes, int nbr_of_particles)
         u[k] = sum;
     }
 }
+
 double calcEnergy(double P, double Q, double w)
 {
 	double E;
 	E = (P*P+w*w*Q*Q)/2.0;
 	return E;
 }
+

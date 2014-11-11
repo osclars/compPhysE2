@@ -13,4 +13,5 @@ extern void calcModes(double *, double *, int);
 extern void calcInvers(double *, double *, int);
 
 extern double calcEnergy(double , double , double);
+
 #endif

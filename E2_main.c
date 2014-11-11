@@ -37,11 +37,12 @@ int main()
 	/* make and open data file */
 	FILE *d_file;
 	d_file = fopen("modeEnergy.data","w");
-	fprintf(d_file, "%0.3f", 0.0);
+	fprintf(d_file, "%.3f", 0.0);
 	for (k=0; k < 5; k++) {
-		w = 2 * sin(k*PI/(double)(2*(nbr_of_particles+1)));
-		E=calcEnergy(1.0, 1.0, 1.0);
-		fprintf(d_file, "\t %e", E);
+		w = 2 * sin((1+k)*PI/(double)(2*(nbr_of_particles+1)));
+		E = calcEnergy(P[k], Q[k], w, "test");
+		/*fprintf(d_file, "\t %e", E);*/
+		printf("E: %f Q: %f P: %f w: %f\n", E, Q[k], P[k], w);
 	}
 	fprintf(d_file, "\n");
 
@@ -70,7 +71,7 @@ int main()
 		} 
 		calcModes(Q, u, nbr_of_particles);
 		calcModes(P, v, nbr_of_particles);
-		fprintf(d_file, "%0.3f", i*timestep);
+		fprintf(d_file, "%.3f", i*timestep);
 		for (k=0; k < 5; k++){
 			w = 2 * sin((k+1)*PI/(double)(2*(nbr_of_particles+1)));
 			E=calcEnergy(P[k], Q[k], w);
