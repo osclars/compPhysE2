@@ -18,7 +18,7 @@ int main()
 	double w,E;
 
 	/*setting variables */
-	nbr_of_timesteps = 0; /* nbr_of_timesteps+1 = power of 2, for best speed */
+	nbr_of_timesteps = 5; /* 250000*/
 	timestep = 0.1;
 	nbr_of_particles = 32;
 
@@ -38,11 +38,12 @@ int main()
 	FILE *d_file;
 	d_file = fopen("modeEnergy.data","w");
 	fprintf(d_file, "%.3f", 0.0);
+	printf("T: %.3f\n", 0.0);
 	for (k=0; k < 5; k++) {
 		w = 2 * sin((1+k)*PI/(double)(2*(nbr_of_particles+1)));
-		E = calcEnergy(P[k], Q[k], w, "test");
+		E = calcEnergy(P[k], Q[k], w, 2.0);
 		/*fprintf(d_file, "\t %e", E);*/
-		printf("E: %f Q: %f P: %f w: %f\n", E, Q[k], P[k], w);
+		printf("E: %0.2f\tQ: %0.2f\tP: %0.2f\tw: %0.2f\n", E, Q[k], P[k], w);
 	}
 	fprintf(d_file, "\n");
 
@@ -72,12 +73,14 @@ int main()
 		calcModes(Q, u, nbr_of_particles);
 		calcModes(P, v, nbr_of_particles);
 		fprintf(d_file, "%.3f", i*timestep);
+		printf("\nT: %.3f\n", i*timestep);
 		for (k=0; k < 5; k++){
 			w = 2 * sin((k+1)*PI/(double)(2*(nbr_of_particles+1)));
 			E=calcEnergy(P[k], Q[k], w);
 			fprintf(d_file, "\t %e", E);
+			printf("E: %0.2f\tQ: %0.2f\tP:%0.2f\tw:%0.2f\n", E, Q[k], P[k], w);
 		}
-		fprintf(d_file, "\n");
+		/*fprintf(d_file, "\n");*/
 	}
 	fclose(d_file);
 	return 0;

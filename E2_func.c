@@ -82,4 +82,3 @@ double calcEnergy(double P, double Q, double w)
 	E = (P*P+w*w*Q*Q)/2.0;
 	return E;
 }
-
