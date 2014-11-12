@@ -11,18 +11,18 @@ Function that calculates the acceleration based on the Hamiltonian.
 The acceleration is calculated based on the displacements u and then stored in a
 u and a should be vectors of the same size, size_of_u
 */
-void calc_acc(double *a, double *u,  int size_of_u)
+void calc_acc(double *a, double *u, double alfa, int size_of_u)
 {
     /* Declaration of variables */
     int i;
     
     /* Calculating the acceleration on the boundaries */
-    a[0] = (- 2*u[0] + u[1]);
-    a[size_of_u - 1] = (u[size_of_u - 2] - 2*u[size_of_u - 1]);
+    a[0] = (- 2*u[0] + u[1])+alfa*((u[1]-u[0])*(u[1]-u[0])-u[0]*u[0]);
+    a[size_of_u - 1] = (u[size_of_u - 2] - 2*u[size_of_u - 1])+alfa*(u[size_of_u-1]*u[size_of_u-1]-(u[size_of_u-1]-u[size_of_u-2])*(u[size_of_u-1]-u[size_of_u-2]));
     
     /* Calculating the acceleration of the inner points */
     for (i = 1; i < size_of_u - 1; i++){
-        a[i] = (u[i - 1] - 2*u[i] + u[i + 1]);
+        a[i] = (u[i - 1] - 2*u[i] + u[i + 1])+alfa*((u[i+1]-u[i])*(u[i+1]-u[i])-(u[i]-u[i-1])*(u[i]-u[i-1]));
     }
 }
 
