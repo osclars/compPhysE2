@@ -16,7 +16,7 @@ int main()
 	int nbr_of_timesteps;
 	int i,j,k;
 	double timestep;
-	double w,E;
+	double w,E; /*TODO make an array w instead*/
 
 	/*setting variables */
 	nbr_of_timesteps = 250000; /* 250000*/
