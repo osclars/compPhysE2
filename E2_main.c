@@ -11,12 +11,11 @@
 /* Main program */
 int main()
 {
-    /* It is useful to construct the transformation matrix outside the main loop */
 	int nbr_of_particles;
 	int nbr_of_timesteps, nPlotModes;
 	int i,j,k;
 	double timestep;
-	double alfa,w,E;
+	double alfa,E;
 
 	/*setting variables */
 	nbr_of_timesteps = 10000000; 
@@ -24,11 +23,23 @@ int main()
 	nbr_of_particles = 32;
 	alfa = 0.1;
 	nPlotModes = nbr_of_particles;/*how many mode energies that are saved*/
-    /* Declaration of arrays */
+	/* Declaration of arrays */
 	double u[nbr_of_particles],v[nbr_of_particles],a[nbr_of_particles];
-	double Q[nbr_of_particles], P[nbr_of_particles];
+	double Q[nbr_of_particles], P[nbr_of_particles], w[nbr_of_particles];
 
-
+	/* constructing transformation matrix */
+    double factor;
+    double trans_matrix[nbr_of_particles][nbr_of_particles];
+    
+    factor = 1 / ((double) nbr_of_particles + 1.0);
+    for (k=0; k < nbr_of_particles; k++) {
+        for (i=0; i < nbr_of_particles; i++) {
+            trans_matrix[i][k] = sqrt(2 * factor) * sin((i + 1) * (k + 1) * PI * factor);
+        }
+    }
+    for (k=0; k < nbr_of_particles; k++){ 
+		w[k] = 2 * sin((1+k)*PI/(double)(2*(nbr_of_particles+1)));
+	}
 	/* Initial condition */
 	for (k=0; k < nbr_of_particles; k++){
 		Q[k] = 0;
@@ -43,16 +54,15 @@ int main()
 	fprintf(d_file, "%.3f", 0.0);
 	/*printf("T: %.3f\n", 0.0);*/
 	for (k=0; k < nPlotModes; k++) {
-		w = 2 * sin((1+k)*PI/(double)(2*(nbr_of_particles+1)));
-		E = calcEnergy(P[k], Q[k], w);
+		E = calcEnergy(P[k], Q[k], w[k]);
 		fprintf(d_file, "\t %e", E);
 		/*printf("E: %0.2f\tQ: %0.2f\tP: %0.2f\tw: %0.2f\n", E, Q[k], P[k], w);*/
 	}
 	fprintf(d_file, "\n");
 
-	/* Calculate initial accelerations based on initial displacements */
-	calcInvers(u, Q, nbr_of_particles);
-	calcInvers(v, P, nbr_of_particles);
+	/* Calculate initial accelerations based on initial conditions */
+	calcInvers(u, Q, nbr_of_particles, trans_matrix);
+	calcInvers(v, P, nbr_of_particles, trans_matrix);
 	calc_acc(a, u, alfa, nbr_of_particles);
     /* timesteps according to velocity Verlet algorithm */
 	for (i = 1; i < nbr_of_timesteps + 1; i++){
@@ -72,14 +82,14 @@ int main()
 		for (j = 0; j < nbr_of_particles; j++){
 		    v[j] += timestep * 0.5 * a[j];
 		} 
-		calcModes(Q, u, nbr_of_particles);
-		calcModes(P, v, nbr_of_particles);
+		/* only print every 1000th step */
 		if (i % 1000 == 0 ){
+			calcModes(Q, u, nbr_of_particles, trans_matrix);
+			calcModes(P, v, nbr_of_particles, trans_matrix);
 			fprintf(d_file, "%.3f", i*timestep);
 			/*printf("\nT: %.3f\n", i*timestep);*/
 			for (k=0; k < nPlotModes; k++){
-				w = 2 * sin((k+1)*PI/(double)(2*(nbr_of_particles+1)));
-				E=calcEnergy(P[k], Q[k], w);
+				E=calcEnergy(P[k], Q[k], w[k]);
 				fprintf(d_file, "\t %e", E);
 				/*printf("E: %0.2f\tQ: %0.2f\tP:%0.2f\tw:%0.2f\n", E, Q[k], P[k], w);*/
 			}

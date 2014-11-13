@@ -8,9 +8,9 @@ E2_func.h
 
 extern void calc_acc(double *, double *, double,  int);
 
-extern void calcModes(double *, double *, int);
+extern void calcModes(double *, double *, int, double [][32]);
 
-extern void calcInvers(double *, double *, int);
+extern void calcInvers(double *, double *, int, double [][32]);
 
 extern double calcEnergy(double , double , double);
 

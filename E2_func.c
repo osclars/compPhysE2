@@ -27,19 +27,9 @@ void calc_acc(double *a, double *u, double alfa, int size_of_u)
 }
 
 
-void calcModes(double *modes, double *u, int nbr_of_particles)
+void calcModes(double *modes, double *u, int nbr_of_particles, double trans_matrix[][32])
 { 
     int i,k;
-    double factor;
-    double trans_matrix[nbr_of_particles][nbr_of_particles];
-    
-    factor = 1 / ((double) nbr_of_particles + 1);
-    for (k=0; k < nbr_of_particles; k++) {
-        for (i=0; i < nbr_of_particles; i++) {
-            trans_matrix[k][i] = sqrt(2 * factor) * sin((i + 1) * (k + 1) * PI * factor);
-        }
-    }
-
 
     /* Transformation to normal modes Q from displacements q.  */
     double sum;
@@ -52,19 +42,9 @@ void calcModes(double *modes, double *u, int nbr_of_particles)
     }
 }
 /* calc u or v from Q or P*/
-void calcInvers(double *u, double *modes, int nbr_of_particles)
+void calcInvers(double *u, double *modes, int nbr_of_particles, double trans_matrix[][32])
 {  
     int i,k;
-    double factor;
-    double trans_matrix[nbr_of_particles][nbr_of_particles];
-    
-    factor = 1 / ((double) nbr_of_particles + 1.0);
-    for (k=0; k < nbr_of_particles; k++) {
-        for (i=0; i < nbr_of_particles; i++) {
-            trans_matrix[i][k] = sqrt(2 * factor) * sin((i + 1) * (k + 1) * PI * factor);
-        }
-    }
-    
     /* Transformation to normal modes Q from displacements q.  */
     double sum;
     for (k = 0; k < nbr_of_particles; k++){
