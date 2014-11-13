@@ -14,11 +14,11 @@ filename = 'modeEnergy.data'
 
 # import data
 data = np.loadtxt(filename)
-
+# calculate for first mode
 eAvModes=np.array([])
 for t in range(1,len(data)+1):
     eAvModes=np.append(eAvModes,1/(t*100.0)*np.trapz(data.T[1][0:t],dx=100))
-
+# add the other modes
 for mode in data.T[2:]:
     tmp=np.array([])
     for t in range(1,len(mode)+1):
@@ -26,8 +26,7 @@ for mode in data.T[2:]:
     eAvModes=np.vstack((eAvModes,tmp))
 # plot
 plt.clf()
-#scale='log'
-for i in range(0,32):
+for i in range(0,len(eAvModes)):
     plt.plot(data[:,0], eAvModes[i],'-',label='Mode '+str(i+1))
 
 # labels

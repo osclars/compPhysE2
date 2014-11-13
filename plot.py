@@ -14,7 +14,8 @@ filename = 'modeEnergy.data'
 # import data
 data = np.loadtxt(filename)
 # plot
-for i in range(1,33):
+plt.clf()
+for i in range(1,len(data.T)):
     plt.plot(data[:,0], data[:,i],'-',label='Mode '+str(i))
 
 # Etot=np.sum(data.T[1:-1],axis=0)
