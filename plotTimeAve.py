@@ -1,14 +1,9 @@
-
-# plot the displacements
-# Created by Martin Gren 2014-10-25.
-
 # imports
 import matplotlib.pylab as plt
 import numpy as np
 # initial size of plot window
 plt.rcParams['figure.figsize'] = 20, 12
 
-# displacements
 # input file
 filename = 'modeEnergy.data'
 
@@ -48,5 +43,4 @@ plt.ylabel('Energy', fontsize=40)
 
 plt.yscale('log')
 plt.xscale('log')
-# display the plot
 plt.show()
