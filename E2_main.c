@@ -16,7 +16,7 @@ int main()
 	int nbr_of_timesteps, nPlotModes;
 	int i,j,k;
 	double timestep;
-	double alfa,w,E;
+	double w,E; /*TODO make an array w instead*/
 
 	/*setting variables */
 	nbr_of_timesteps = 10000000; 
