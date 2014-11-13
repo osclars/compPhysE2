@@ -18,11 +18,11 @@ int main()
 	double alfa,E;
 
 	/*setting variables */
-	nbr_of_timesteps = 10000000; 
-	timestep = 0.01;
+	nbr_of_timesteps =10000000 ; 
+	timestep = 0.1;
 	nbr_of_particles = 32;
 	alfa = 0.1;
-	nPlotModes = nbr_of_particles;/*how many mode energies that are saved*/
+	nPlotModes =nbr_of_particles;/*how many mode energies that are saved*/
 	/* Declaration of arrays */
 	double u[nbr_of_particles],v[nbr_of_particles],a[nbr_of_particles];
 	double Q[nbr_of_particles], P[nbr_of_particles], w[nbr_of_particles];

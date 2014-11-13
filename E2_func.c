@@ -27,7 +27,7 @@ void calc_acc(double *a, double *u, double alfa, int size_of_u)
 }
 
 
-void calcModes(double *modes, double *u, int nbr_of_particles, double trans_matrix[][32])
+void calcModes(double *modes, double *u, int nbr_of_particles, double trans_matrix[][nbr_of_particles])
 { 
     int i,k;
 
@@ -42,7 +42,7 @@ void calcModes(double *modes, double *u, int nbr_of_particles, double trans_matr
     }
 }
 /* calc u or v from Q or P*/
-void calcInvers(double *u, double *modes, int nbr_of_particles, double trans_matrix[][32])
+void calcInvers(double *u, double *modes, int nbr_of_particles, double trans_matrix[][nbr_of_particles])
 {  
     int i,k;
     /* Transformation to normal modes Q from displacements q.  */
